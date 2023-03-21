@@ -1,5 +1,7 @@
 package com.cegrconsulting.expressfoodapi.di.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +11,8 @@ import com.cegrconsulting.expressfoodapi.di.notificacao.Notificador;
 @Component
 public class AtivacaoClienteService {
 
-	@Autowired(required = false)
-	private Notificador notificador;
+	@Autowired
+	private List<Notificador> notificadores;
 
 	// @Autowired
 	// public AtivacaoClienteService(Notificador notificador) {
@@ -19,11 +21,11 @@ public class AtivacaoClienteService {
 	
 	public void ativar(Cliente cliente) {
 		cliente.ativar();
-		if(notificador != null) {
+		
+		for(Notificador notificador : notificadores) {
 			notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
-		} else {
-			System.out.println("Não existe notificador, mas cliente foi ativado");
 		}
+		
 	}
 
 	// @Autowired
