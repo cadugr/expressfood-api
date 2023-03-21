@@ -1,16 +1,17 @@
 package com.cegrconsulting.expressfoodapi.di.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.cegrconsulting.expressfoodapi.di.modelo.Cliente;
+import com.cegrconsulting.expressfoodapi.di.notificacao.NivelUrgencia;
 import com.cegrconsulting.expressfoodapi.di.notificacao.Notificador;
+import com.cegrconsulting.expressfoodapi.di.notificacao.TipoDoNotificador;
 
 @Component
 public class AtivacaoClienteService {
 
-	@Qualifier("urgente")
+	@TipoDoNotificador(NivelUrgencia.SEM_URGENCIA)
 	@Autowired
 	private Notificador notificador;
 	
