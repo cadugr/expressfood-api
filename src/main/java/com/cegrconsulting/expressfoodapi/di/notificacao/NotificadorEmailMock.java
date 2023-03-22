@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.cegrconsulting.expressfoodapi.di.modelo.Cliente;
 
 @Profile("dev")
-@TipoDoNotificador(NivelUrgencia.URGENTE)
+@TipoDoNotificador(NivelUrgencia.SEM_URGENCIA)
 @Component
 public class NotificadorEmailMock implements Notificador {
 
