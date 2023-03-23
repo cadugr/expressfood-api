@@ -1,4 +1,4 @@
-package com.cegrconsulting.expressfoodapi;
+package com.cegrconsulting.expressfood;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
