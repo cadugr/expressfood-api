@@ -23,13 +23,14 @@ public class Restaurante {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable = false)
 	private String nome;
 	
-	@Column(name = "taxa_frete")
+	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
 	@ManyToOne
-	@JoinColumn(name = "cozinha_id") //neste caso nem precisava, pois esse é o nome de coluna criado por padrão pelo Hibernate
+	@JoinColumn(name = "cozinha_id", nullable = false) //neste caso nem precisava, pois esse é o nome de coluna criado por padrão pelo Hibernate
 	private Cozinha cozinha;
 
 }
