@@ -22,7 +22,7 @@ public class ConsultaRestauranteMain {
     List<Restaurante> todosRestaurantes = restaurantes.todos();
 
     for(Restaurante restaurante: todosRestaurantes) {
-      System.out.printf("Restaurante %s - Taxa frete: %.2f \n", restaurante.getNome(), restaurante.getTaxaFrete());
+      System.out.printf("Restaurante %s - Taxa frete: %.2f - Cozinha: %s\n", restaurante.getNome(), restaurante.getTaxaFrete(), restaurante.getCozinha().getNome());
     }
   }
   
