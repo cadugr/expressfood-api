@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.cegrconsulting.expressfood.ExpressfoodApiApplication;
 import com.cegrconsulting.expressfood.domain.model.Cozinha;
+import com.cegrconsulting.expressfood.domain.repository.CozinhaRepository;
 
 public class ConsultaCozinhaMain {
 
@@ -16,11 +17,11 @@ public class ConsultaCozinhaMain {
             .web(WebApplicationType.NONE)
             .run(args);
 
-    CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+    CozinhaRepository cozinhas = applicationContext.getBean(CozinhaRepository.class);
     
-    List<Cozinha> cozinhas = cadastroCozinha.listar();
+    List<Cozinha> todasCozinhas = cozinhas.todas();
 
-    for(Cozinha cozinha: cozinhas) {
+    for(Cozinha cozinha: todasCozinhas) {
       System.out.println(cozinha.getNome());
     }
   }
