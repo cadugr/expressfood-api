@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
@@ -28,6 +29,7 @@ public class Restaurante {
 	private BigDecimal taxaFrete;
 
 	@ManyToOne
+	@JoinColumn(name = "cozinha_id") //neste caso nem precisava, pois esse é o nome de coluna criado por padrão pelo Hibernate
 	private Cozinha cozinha;
 
 }
