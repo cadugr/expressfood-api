@@ -10,7 +10,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.Data;
 import lombok.NonNull;
 
-@JacksonXmlRootElement(localName = "cozinhas") //poderíamos utilizar a anotação JsonRootElement, daria na mesma
+@JacksonXmlRootElement(localName = "cozinhas") //poderíamos utilizar a anotação JsonRootName, daria na mesma
 @Data
 public class CozinhasXmlWrapper {
 
