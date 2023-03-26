@@ -7,7 +7,7 @@ import com.cegrconsulting.expressfood.domain.model.Cozinha;
 public interface CozinhaRepository {
 
   List<Cozinha> listar();
-  Cozinha porId(Long id);
+  Cozinha buscar(Long id);
   Cozinha adicionar(Cozinha cozinha);
   void remover(Cozinha cozinha);
   
