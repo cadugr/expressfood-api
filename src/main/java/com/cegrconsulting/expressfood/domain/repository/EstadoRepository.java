@@ -6,7 +6,7 @@ import com.cegrconsulting.expressfood.domain.model.Estado;
 
 public interface EstadoRepository {
 
-  List<Estado> todos();
+  List<Estado> listar();
   Estado porId(Long id);
   Estado adicionar(Estado estado);
   void remover(Estado estado);
