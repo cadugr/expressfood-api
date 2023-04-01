@@ -1,8 +1,12 @@
 package com.cegrconsulting.expressfood.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.cegrconsulting.expressfood.domain.exception.EntidadeEmUsoException;
+import com.cegrconsulting.expressfood.domain.exception.EntidadeNaoEncontradaException;
 import com.cegrconsulting.expressfood.domain.model.Cozinha;
 import com.cegrconsulting.expressfood.domain.repository.CozinhaRepository;
 
@@ -15,5 +19,20 @@ public class CadastroCozinhaService {
   public Cozinha salvar(Cozinha cozinha) {
     return cozinhaRepository.salvar(cozinha);
   }
-  
+
+  public void excluir(Long cozinhaId) {
+    try {
+      cozinhaRepository.remover(cozinhaId);
+    } catch(EmptyResultDataAccessException e) {
+      throw new EntidadeNaoEncontradaException(
+        String.format("Não existe um cadastro de cozinha com código %d", cozinhaId)
+      );
+    } 
+    catch (DataIntegrityViolationException e) {
+      throw new EntidadeEmUsoException(
+        String.format("Cozinha de código %d não pode ser removida, pois está em uso", cozinhaId)
+      );
+    }
+  }
+
 }

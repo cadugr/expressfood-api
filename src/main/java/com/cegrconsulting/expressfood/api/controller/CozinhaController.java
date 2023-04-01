@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cegrconsulting.expressfood.api.model.CozinhasXmlWrapper;
+import com.cegrconsulting.expressfood.domain.exception.EntidadeEmUsoException;
+import com.cegrconsulting.expressfood.domain.exception.EntidadeNaoEncontradaException;
 import com.cegrconsulting.expressfood.domain.model.Cozinha;
 import com.cegrconsulting.expressfood.domain.repository.CozinhaRepository;
 import com.cegrconsulting.expressfood.domain.service.CadastroCozinhaService;
@@ -78,19 +79,16 @@ public class CozinhaController {
   @DeleteMapping("/{cozinhaId}")
   public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId) {
     try {
-      Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
-  
-      if(cozinha != null) {
-        cozinhaRepository.remover(cozinha);
-        return ResponseEntity.noContent().build();
-      }
-  
-      return ResponseEntity.notFound().build();
+      cadastroCozinha.excluir(cozinhaId);
+      return ResponseEntity.noContent().build();
       
-    } catch (DataIntegrityViolationException e) {
+    } catch(EntidadeNaoEncontradaException e) {
+      return ResponseEntity.notFound().build();
+
+    } catch (EntidadeEmUsoException e) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
-      //Quando utilizamos o status 409, o idel é retornarmos algo no co corpo da requisição, de preferência a causa do conflito.
     }
+  
   }
   
 }
