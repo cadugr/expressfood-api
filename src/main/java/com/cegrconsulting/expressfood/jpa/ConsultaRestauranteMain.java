@@ -19,7 +19,7 @@ public class ConsultaRestauranteMain {
 
     RestauranteRepository restaurantes = applicationContext.getBean(RestauranteRepository.class);
     
-    List<Restaurante> todosRestaurantes = restaurantes.todos();
+    List<Restaurante> todosRestaurantes = restaurantes.listar();
 
     for(Restaurante restaurante: todosRestaurantes) {
       System.out.printf("Restaurante %s - Taxa frete: %.2f - Cozinha: %s\n", restaurante.getNome(), restaurante.getTaxaFrete(), restaurante.getCozinha().getNome());
