@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cegrconsulting.expressfood.api.model.CozinhasXmlWrapper;
 import com.cegrconsulting.expressfood.domain.model.Cozinha;
 import com.cegrconsulting.expressfood.domain.repository.CozinhaRepository;
+import com.cegrconsulting.expressfood.domain.service.CadastroCozinhaService;
 
 @RestController
 @RequestMapping("/cozinhas")
@@ -28,6 +29,9 @@ public class CozinhaController {
 
   @Autowired
   private CozinhaRepository cozinhaRepository;
+
+  @Autowired
+  private CadastroCozinhaService cadastroCozinha;
 
   @GetMapping
   public List<Cozinha> listar() {
@@ -53,7 +57,7 @@ public class CozinhaController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public Cozinha adicionar(@RequestBody Cozinha cozinha) {
-    return cozinhaRepository.salvar(cozinha);
+    return cadastroCozinha.salvar(cozinha);
   }
 
   @PutMapping("/{cozinhaId}")
