@@ -1,14 +1,11 @@
 package com.cegrconsulting.expressfood.domain.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.cegrconsulting.expressfood.domain.model.FormaPagamento;
 
-public interface FormaPagamentoRepository {
-  
-  List<FormaPagamento> todas();
-  FormaPagamento porId(Long id);
-  FormaPagamento adicionar(FormaPagamento formaPagamento);
-  void remover(FormaPagamento formaPagamento);
+@Repository
+public interface FormaPagamentoRepository extends JpaRepository<FormaPagamento, Long>{
 
 }
