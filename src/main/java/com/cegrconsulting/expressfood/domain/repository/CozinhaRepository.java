@@ -11,7 +11,8 @@ import com.cegrconsulting.expressfood.domain.model.Cozinha;
 @Repository
 public interface CozinhaRepository extends JpaRepository<Cozinha, Long>{
 
-  List<Cozinha> findTodasByNome (String nome);
+  //Entre o find e o By, podemos inserir o que quisermos que não afeta o funcionamento
+  List<Cozinha> findTodasByNomeContaining (String nome);
   Optional<Cozinha> findByNome(String nome);
   
 }
