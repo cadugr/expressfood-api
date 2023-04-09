@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.cegrconsulting.expressfood.domain.model.Restaurante;
 
 @Repository
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
+public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries {
 
   List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
   //@Query("from Restaurante where nome like %:nome% and cozinha.id = :id")
@@ -20,5 +20,6 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
   Optional<Restaurante> findFirstRestauranteByNomeContaining(String nome); //vai buscar o primeiro registro, mesmo que hajam outros.
   List<Restaurante> findTop2ByNomeContaining(String nome); //Usando o Top seguido de um número, estamos buscando os primeiros registros.  Neste caso, os dois primeiros.
   int countByCozinhaId(Long cozinhaId); //Utilizamos o count para contar a quantidade de registros.  Neste caso, desejamos saber a quantidade de restaurantes, dada uma cozinha
+  //List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal);
 
 }
