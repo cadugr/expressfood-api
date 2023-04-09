@@ -14,5 +14,6 @@ public interface CozinhaRepository extends JpaRepository<Cozinha, Long>{
   //Entre o find e o By, podemos inserir o que quisermos que não afeta o funcionamento
   List<Cozinha> findTodasByNomeContaining (String nome);
   Optional<Cozinha> findByNome(String nome);
+  boolean existsByNome(String nome); //busca pelo nome exato e se existir, retorna true e se não existir, retorna false.
   
 }
