@@ -1,5 +1,8 @@
 package com.cegrconsulting.expressfood.api.controller;
 
+import static com.cegrconsulting.expressfood.infrastructure.repository.spec.RestauranteSpecs.comFreteGratis;
+import static com.cegrconsulting.expressfood.infrastructure.repository.spec.RestauranteSpecs.comNomeSemelhante;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -13,8 +16,6 @@ import com.cegrconsulting.expressfood.domain.model.Cozinha;
 import com.cegrconsulting.expressfood.domain.model.Restaurante;
 import com.cegrconsulting.expressfood.domain.repository.CozinhaRepository;
 import com.cegrconsulting.expressfood.domain.repository.RestauranteRepository;
-import com.cegrconsulting.expressfood.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
-import com.cegrconsulting.expressfood.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 
 @RestController
 @RequestMapping("/teste")
@@ -74,10 +75,9 @@ public class TesteController {
 
   @GetMapping("/restaurantes/com-frete-gratis")
   public List<Restaurante> restaurantesComFreteGratis(String nome) {
-    var comFreteGratis = new RestauranteComFreteGratisSpec();
-    var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
-
-    return restauranteRepository.findAll(comFreteGratis.and(comNomeSemelhante));
+    
+    return restauranteRepository.findAll(comFreteGratis()
+                  .and(comNomeSemelhante(nome)));
   }
   
 }
