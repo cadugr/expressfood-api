@@ -3,11 +3,9 @@ package com.cegrconsulting.expressfood.domain.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.cegrconsulting.expressfood.domain.model.Cozinha;
 
-public interface CozinhaRepository extends JpaRepository<Cozinha, Long>{
+public interface CozinhaRepository extends CustomJpaRepository<Cozinha, Long>{
 
   //Entre o find e o By, podemos inserir o que quisermos que não afeta o funcionamento
   List<Cozinha> findTodasByNomeContaining (String nome);
