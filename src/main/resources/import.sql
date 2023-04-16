@@ -12,10 +12,10 @@ insert into cidade (id, nome, estado_id) values (4, 'Itú', 2);
 insert into cidade (id, nome, estado_id) values (5, 'Belo Horizonte', 3);
 insert into cidade (id, nome, estado_id) values (6, 'Ipatinga', 3);
 
-insert into restaurante (id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, endereco_cidade_id, nome, taxa_frete, cozinha_id) values (1, '22441120', 'Rua Rainha Guilhermina', '95', 'LOJA B', 'Leblon', 1, 'Nam Thai', 7, 1);
-insert into restaurante (id, nome, taxa_frete, cozinha_id) values (2,'Càm Om', 8.5, 1);
-insert into restaurante (id, nome, taxa_frete, cozinha_id) values (3,'Govinda', 5, 2);
-insert into restaurante (id, nome, taxa_frete, cozinha_id) values (4,'Govardhana Hari', 11, 2);
+insert into restaurante (id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, endereco_cidade_id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (1, '22441120', 'Rua Rainha Guilhermina', '95', 'LOJA B', 'Leblon', 1, 'Nam Thai', 7, 1, utc_timestamp, utc_timestamp);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (2,'Càm Om', 8.5, 1, utc_timestamp, utc_timestamp);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (3,'Govinda', 5, 2, utc_timestamp, utc_timestamp);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (4,'Govardhana Hari', 11, 2, utc_timestamp, utc_timestamp);
 
 insert into forma_pagamento (id, descricao) values (1, 'Cartão de crédito');
 insert into forma_pagamento (id, descricao) values (2, 'Cartão de débito');
