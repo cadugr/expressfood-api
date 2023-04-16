@@ -17,6 +17,9 @@ insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_a
 insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (3,'Govinda', 5, 2, utc_timestamp, utc_timestamp);
 insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (4,'Govardhana Hari', 11, 2, utc_timestamp, utc_timestamp);
 
+insert into produto (id, ativo, descricao, nome, preco, restaurante_id) values (1, 1, 'Salada picante de camarões, papaia e manga | Médio picante', 'Yam Kung Mammuang', 47, 1);
+insert into produto (id, ativo, descricao, nome, preco, restaurante_id) values (2, 1, 'Camarões com abacaxí, curry vermelho tailandês e leite de coco', 'Gaeng Kua Sapparod', 94, 1);
+
 insert into forma_pagamento (id, descricao) values (1, 'Cartão de crédito');
 insert into forma_pagamento (id, descricao) values (2, 'Cartão de débito');
 insert into forma_pagamento (id, descricao) values (3, 'Dinheiro');
