@@ -44,7 +44,7 @@ public class RestauranteController {
   public ResponseEntity<Restaurante> buscar(@PathVariable Long restauranteId) {
     Optional<Restaurante> restaurante = restauranteRepository.findById(restauranteId);
 
-    if(restaurante.isPresent()) {
+    if (restaurante.isPresent()) {
       return ResponseEntity.ok(restaurante.get());
     }
 
@@ -60,18 +60,18 @@ public class RestauranteController {
     } catch (EntidadeNaoEncontradaException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
-    
+
   }
 
   @PutMapping("/{restauranteId}")
-  public ResponseEntity<?> atualizar(@PathVariable Long restauranteId, 
-        @RequestBody Restaurante restaurante) {
+  public ResponseEntity<?> atualizar(@PathVariable Long restauranteId,
+      @RequestBody Restaurante restaurante) {
     Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
-    if(restauranteAtual.isEmpty()) {
+    if (restauranteAtual.isEmpty()) {
       return ResponseEntity.notFound().build();
-    }        
+    }
 
-    BeanUtils.copyProperties(restaurante, restauranteAtual.get(), "id", "formasPagamento");
+    BeanUtils.copyProperties(restaurante, restauranteAtual.get(), "id", "formasPagamento", "endereco");
     try {
       Restaurante restauranteSalvo = cadastroRestaurante.salvar(restauranteAtual.get());
       return ResponseEntity.ok().body(restauranteSalvo);
@@ -83,8 +83,8 @@ public class RestauranteController {
   @PatchMapping("/{restauranteId}")
   public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos) {
     Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
-    
-    if(restauranteAtual.isEmpty()) {
+
+    if (restauranteAtual.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
 
@@ -96,15 +96,21 @@ public class RestauranteController {
   private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino) {
 
     ObjectMapper objectMapper = new ObjectMapper();
-    Restaurante restauranteOrigem = objectMapper.convertValue(dadosOrigem, Restaurante.class); //necessário para já converter todos os valores.  Se não fizermos, teremos erros de conversão
+    Restaurante restauranteOrigem = objectMapper.convertValue(dadosOrigem, Restaurante.class); // necessário para já
+                                                                                               // converter todos os
+                                                                                               // valores. Se não
+                                                                                               // fizermos, teremos
+                                                                                               // erros de conversão
 
     dadosOrigem.forEach((nomePropriedade, valorPropriedade) -> {
       Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
-      field.setAccessible(true); //permite que possamos acessar o atributo privado fora da classe
-      Object novoValor = ReflectionUtils.getField(field, restauranteOrigem); //Desta forma estamos buscando o campo que desejamos dentro do objeto restauranteOrigem
-      
+      field.setAccessible(true); // permite que possamos acessar o atributo privado fora da classe
+      Object novoValor = ReflectionUtils.getField(field, restauranteOrigem); // Desta forma estamos buscando o campo que
+                                                                             // desejamos dentro do objeto
+                                                                             // restauranteOrigem
+
       ReflectionUtils.setField(field, restauranteDestino, novoValor);
     });
   }
-  
+
 }

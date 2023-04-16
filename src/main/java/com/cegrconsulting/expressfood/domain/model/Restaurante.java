@@ -40,6 +40,7 @@ public class Restaurante {
 	@JoinColumn(name = "cozinha_id", nullable = false) //neste caso nem precisava, pois esse é o nome de coluna criado por padrão pelo Hibernate
 	private Cozinha cozinha;
 
+	@JsonIgnore
 	@Embedded
 	private Endereco endereco;
 
