@@ -14,7 +14,7 @@ public interface RestauranteRepository extends CustomJpaRepository<Restaurante, 
 
   // Para associações que terminem com ToOne, basta o usarmos apenas o join, pois o Hibernate já faz o fetch de forma implícita.  Para coleções, precisamos fazer o fetch.
   // Coloquei o fetch para cozinha somente para deixar explícito, mas não é necessário.
-  @Query("from Restaurante r join fetch r.cozinha left join fetch r.formasPagamento")
+  @Query("from Restaurante r join fetch r.cozinha")
   List<Restaurante> findAll();
   List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
   //@Query("from Restaurante where nome like %:nome% and cozinha.id = :id")
