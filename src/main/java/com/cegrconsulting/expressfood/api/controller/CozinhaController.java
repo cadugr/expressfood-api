@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.cegrconsulting.expressfood.domain.exception.EntidadeNaoEncontradaException;
 import com.cegrconsulting.expressfood.domain.model.Cozinha;
 import com.cegrconsulting.expressfood.domain.repository.CozinhaRepository;
 import com.cegrconsulting.expressfood.domain.service.CadastroCozinhaService;
@@ -84,9 +86,14 @@ public class CozinhaController {
   // }
 
   @DeleteMapping("/{cozinhaId}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void remover(@PathVariable Long cozinhaId) {
-      cadastroCozinha.excluir(cozinhaId);
-  }
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long cozinhaId) {
+		try {
+			cadastroCozinha.excluir(cozinhaId);
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+//			throw new ServerWebInputException(e.getMessage());
+		}
+	}
   
 }

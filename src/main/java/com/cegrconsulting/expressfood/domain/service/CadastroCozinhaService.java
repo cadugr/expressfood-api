@@ -24,6 +24,10 @@ public class CadastroCozinhaService {
     try {
       cozinhaRepository.deleteById(cozinhaId);
     } catch(EmptyResultDataAccessException e) {
+      //Esta classe veio a partir do Spring 5.
+      // Contudo, utilizar esta exceção que foi criada para manipular a resposta http em uma classe de domínio, não é o ideal.
+      // throw new ResponseStatusException(HttpStatus.NOT_FOUND, 
+      //         String.format("Não existe um cadastro de cozinha com código %d", cozinhaId));
       throw new EntidadeNaoEncontradaException(
         String.format("Não existe um cadastro de cozinha com código %d", cozinhaId)
       );
