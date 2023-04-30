@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cegrconsulting.expressfood.domain.exception.EntidadeNaoEncontradaException;
+import com.cegrconsulting.expressfood.domain.exception.CozinhaNaoEncontradaException;
 import com.cegrconsulting.expressfood.domain.exception.NegocioException;
+import com.cegrconsulting.expressfood.domain.exception.RestauranteNaoEncontradoException;
 import com.cegrconsulting.expressfood.domain.model.Restaurante;
 import com.cegrconsulting.expressfood.domain.repository.RestauranteRepository;
 import com.cegrconsulting.expressfood.domain.service.CadastroRestauranteService;
@@ -50,21 +51,20 @@ public class RestauranteController {
   public Restaurante adicionar(@RequestBody Restaurante restaurante) {
     try {
       return cadastroRestaurante.salvar(restaurante);
-    } catch (EntidadeNaoEncontradaException e) {
-      throw new NegocioException(e.getMessage());
+    } catch (CozinhaNaoEncontradaException e) {
+      throw new NegocioException(e.getMessage(), e);
     }  
   }
 
   @PutMapping("/{restauranteId}")
   public Restaurante atualizar(@PathVariable Long restauranteId,
       @RequestBody Restaurante restaurante) {
-    Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
-    
-    BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro");
     try {
+      Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);  
+      BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro");
       return cadastroRestaurante.salvar(restauranteAtual);
-    } catch (EntidadeNaoEncontradaException e) {
-      throw new NegocioException(e.getMessage());
+    } catch (CozinhaNaoEncontradaException e) {
+      throw new NegocioException(e.getMessage(), e);
     }
     
   }
