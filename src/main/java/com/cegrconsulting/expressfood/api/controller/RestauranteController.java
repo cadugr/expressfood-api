@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cegrconsulting.expressfood.domain.exception.CozinhaNaoEncontradaException;
 import com.cegrconsulting.expressfood.domain.exception.NegocioException;
-import com.cegrconsulting.expressfood.domain.exception.RestauranteNaoEncontradoException;
 import com.cegrconsulting.expressfood.domain.model.Restaurante;
 import com.cegrconsulting.expressfood.domain.repository.RestauranteRepository;
 import com.cegrconsulting.expressfood.domain.service.CadastroRestauranteService;
