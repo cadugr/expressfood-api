@@ -1,5 +1,6 @@
 package com.cegrconsulting.expressfood.api.exceptionhandler;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -15,7 +16,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.cegrconsulting.expressfood.domain.exception.EntidadeEmUsoException;
 import com.cegrconsulting.expressfood.domain.exception.EntidadeNaoEncontradaException;
 import com.cegrconsulting.expressfood.domain.exception.NegocioException;
+import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //Esta classe abstrata já trata por padrão diversas exceções
@@ -29,6 +32,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //Esta
 
         if(rootCause instanceof InvalidFormatException) {
           return handleInvalidFormatException((InvalidFormatException)rootCause, headers, status, request);
+        } else if (rootCause instanceof PropertyBindingException) {
+          return handlePropertyBindingException((PropertyBindingException)rootCause, headers, status, request);
         }
        
         ProblemType problemType = ProblemType.MENSAGEM_IMCOMPREENSIVEL;
@@ -38,12 +43,23 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //Esta
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
   }
 
+  private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex,
+      HttpHeaders headers, HttpStatus status, WebRequest request) {
+        
+        String path = joinPath(ex.getPath());
+        
+        ProblemType problemType = ProblemType.MENSAGEM_IMCOMPREENSIVEL;
+        String detail = String.format("A propriedade '%s' não existe. "
+            + "Corrija ou remova essa propriedade e tente novamente.", path);
+                
+        Problem problem = createProblemBuilder(status, problemType, detail).build();        
+        return handleExceptionInternal(ex, problem, headers, status, request);
+  }
+
   private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex, HttpHeaders headers,
         HttpStatus status, WebRequest request) {
     
-    String path = ex.getPath().stream()
-          .map(ref -> ref.getFieldName())
-          .collect(Collectors.joining("."));
+    String path = joinPath(ex.getPath());
 
     ProblemType problemType = ProblemType.MENSAGEM_IMCOMPREENSIVEL;
     String detail = String.format("A propriedade '%s' recebeu o valor '%s', "
@@ -52,6 +68,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //Esta
     Problem problem = createProblemBuilder(status, problemType, detail).build();        
     return handleExceptionInternal(ex, problem, headers, status, request);
   }
+
+  private String joinPath(List<Reference> references) {
+    return references.stream()
+        .map(ref -> ref.getFieldName())
+        .collect(Collectors.joining("."));
+  }     
 
   @ExceptionHandler(EntidadeNaoEncontradaException.class)
   public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
