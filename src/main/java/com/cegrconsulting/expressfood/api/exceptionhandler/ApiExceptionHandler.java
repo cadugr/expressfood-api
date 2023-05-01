@@ -3,6 +3,7 @@ package com.cegrconsulting.expressfood.api.exceptionhandler;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -14,6 +15,18 @@ import com.cegrconsulting.expressfood.domain.exception.NegocioException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //Esta classe abstrata já trata por padrão diversas exceções
+
+
+  @Override
+  protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers,
+      HttpStatus status, WebRequest request) {
+       
+        ProblemType problemType = ProblemType.MENSAGEM_IMCOMPREENSIVEL;
+        String detail = "O corpo da requisição está inválido.  Verifique erro de sintaxe.";
+    
+        Problem problem = createProblemBuilder(status, problemType, detail).build();
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+  }
 
   @ExceptionHandler(EntidadeNaoEncontradaException.class)
   public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
