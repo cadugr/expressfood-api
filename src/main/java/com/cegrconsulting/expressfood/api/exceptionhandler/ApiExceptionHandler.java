@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.cegrconsulting.expressfood.domain.exception.EntidadeEmUsoException;
@@ -74,6 +75,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //Esta
         .map(ref -> ref.getFieldName())
         .collect(Collectors.joining("."));
   }     
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<?> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, 
+          WebRequest request) {
+    HttpStatus status = HttpStatus.BAD_REQUEST;
+    ProblemType problemType = ProblemType.PARAMETRO_INVALIDO;
+        String detail = String.format("O parâmetro de URL ‘%s’ recebeu o valor ‘%s’, que é de um tipo inválido."  
+        + " Corrija e informe um valor compatível com o tipo %s.", ex.getName(), ex.getValue(), 
+            ex.getRequiredType().getSimpleName());
+                
+    Problem problem = createProblemBuilder(status, problemType, detail).build();        
+    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+  }
 
   @ExceptionHandler(EntidadeNaoEncontradaException.class)
   public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
