@@ -16,7 +16,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -51,6 +53,8 @@ public class Restaurante {
 
 	//@JsonIgnore
 	//@JsonIgnoreProperties("hibernateLazyInitializer")
+	@Valid
+	@NotNull
 	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id", nullable = false) //neste caso nem precisava, pois esse é o nome de coluna criado por padrão pelo Hibernate
 	private Cozinha cozinha;
