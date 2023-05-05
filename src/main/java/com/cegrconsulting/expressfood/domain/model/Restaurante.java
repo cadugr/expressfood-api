@@ -24,6 +24,7 @@ import javax.validation.constraints.PositiveOrZero;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.cegrconsulting.expressfood.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -41,20 +42,20 @@ public class Restaurante {
 	
 	//@NotNull
 	//@NotEmpty
-	@NotBlank
+	@NotBlank(groups = Groups.CadastroRestaurante.class)
 	@Column(nullable = false)
 	private String nome;
 	
 	//@DecimalMin("1")
 	//Uma outra anotação que faz o mesmo é a a seguir:
-	@PositiveOrZero
+	@PositiveOrZero(groups = Groups.CadastroRestaurante.class)
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
 	//@JsonIgnore
 	//@JsonIgnoreProperties("hibernateLazyInitializer")
 	@Valid
-	@NotNull
+	@NotNull(groups = Groups.CadastroRestaurante.class)
 	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id", nullable = false) //neste caso nem precisava, pois esse é o nome de coluna criado por padrão pelo Hibernate
 	private Cozinha cozinha;
